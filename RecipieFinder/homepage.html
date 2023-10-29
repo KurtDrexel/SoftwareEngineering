@@ -1,71 +1,32 @@
 <!--=============== This is a homepage ===============-->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Recipe Finder</title>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
 </head>
+
 <body>
-     <header>
-        <ul class="header-left-links-ul horizontal">
-            <li class="header-left-links">
-                <a href="/bookmarks/">Bookmarks</a>
-            </li>
-            <li class="header-left-links">
-                <a href="/contests/">Contests</a>
-            </li>
-            <li class="header-left-links">
-                <a href="/tips/">Tips</a>
-            </li>
-            <li class="header-left-links">
-                <a href="/submit-a-recipe/">Submit a Recipe</a>
-            </li>
-            <li class="header-left-links">
-                <a href="/decider/">Decider</a>
-            </li>
-        </ul>
-    </header>
-    <main>
-        <section id="find-recipe" class="search-section">
-            <h2>Find Your Recipe</h2>
-            <form class="search-form">
-                <input type="text" placeholder="Search for recipes..." id="recipe-search">
-                <button type="submit">Search</button>
-            </form>
-        </section>
-        <section id="featured-categories" class="featured-category">
-            <h2>Featured Categories</h2>
-            <ul class="category-list">
-                <li>Italian</li>
-                <li>Mexican</li>
-                <li>Asian</li>
-                <li>Vegetarian</li>
-                <li>Desserts</li>
-            </ul>
-        </section>
-        <section id="popular-recipes" class="popular-recipes">
-            <h2>Popular Recipes</h2>
-            <div class="recipe-card">
-                <img src="recipe1.jpg" alt="Recipe 1">
-                <h3>Spaghetti Carbonara</h3>
-                <p>A classic Italian pasta dish with eggs, cheese, pancetta, and black pepper.</p>
-            </div>
-            <!-- Add more recipe cards as needed -->
-        </section>
-        <section id="newsletter" class="newsletter">
-            <h2>Subscribe to Our Newsletter</h2>
-            <p>Stay up-to-date with the latest recipes and food trends. Subscribe to our newsletter.</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Enter your email" id="newsletter-email" required>
-                <button type="submit">Subscribe</button>
-            </form>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Recipe Finder</p>
-    </footer>
+    <div class="navbar">
+        <a href="{{ url_for('home') }}" class="navbar-brand">Home</a>
+        <a href="{{ url_for('enternew') }}" class="navbar-item">Add New Student</a>
+        <a href="{{ url_for('list') }}" class="navbar-item">Review and Edit Students</a>
+        <a href="{{ url_for('enternewinstructor') }}" class="navbar-item">Add New Instructor</a>
+        <a href="{{ url_for('enternewcourse') }}" class="navbar-item">Add New Course</a>
+    </div>
+
+    <div class="body-content">
+        {% block content %}
+
+        <h1>Welcome to the University Management System</h1>
+        <p>This is a simple web application to manage students, instructors, and courses.</p>
+        {% endblock %}
+        <hr/>
+        <footer>
+            
+            <p>&copy; 2023 University Management System</p>
+        </footer>
+    </div>
 </body>
 </html>
-
