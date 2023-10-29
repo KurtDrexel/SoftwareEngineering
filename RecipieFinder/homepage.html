@@ -10,16 +10,24 @@
 <body>
     <header>
         <h1>Welcome to Recipe Finder</h1>
+        <nav>
+            <ul class="navigation">
+                <li><a href="#find-recipe">Find Recipe</a></li>
+                <li><a href="#featured-categories">Featured Categories</a></li>
+                <li><a href="#popular-recipes">Popular Recipes</a></li>
+                <li><a href="#newsletter">Subscribe</a></li>
+            </ul>
+        </nav>
     </header>
     <main>
-        <section class="search-section">
+        <section id="find-recipe" class="search-section">
             <h2>Find Your Recipe</h2>
             <form class="search-form">
                 <input type="text" placeholder="Search for recipes..." id="recipe-search">
                 <button type="submit">Search</button>
             </form>
         </section>
-        <section class="featured-category">
+        <section id="featured-categories" class="featured-category">
             <h2>Featured Categories</h2>
             <ul class="category-list">
                 <li>Italian</li>
@@ -29,25 +37,16 @@
                 <li>Desserts</li>
             </ul>
         </section>
-        <section class="popular-recipes">
+        <section id="popular-recipes" class="popular-recipes">
             <h2>Popular Recipes</h2>
             <div class="recipe-card">
                 <img src="recipe1.jpg" alt="Recipe 1">
                 <h3>Spaghetti Carbonara</h3>
                 <p>A classic Italian pasta dish with eggs, cheese, pancetta, and black pepper.</p>
             </div>
-            <div class="recipe-card">
-                <img src="recipe2.jpg" alt="Recipe 2">
-                <h3>Chicken Alfredo</h3>
-                <p>Creamy pasta with chicken, garlic, and parmesan cheese.</p>
-            </div>
-            <div class="recipe-card">
-                <img src="recipe3.jpg" alt="Recipe 3">
-                <h3>Veggie Stir-Fry</h3>
-                <p>Healthy stir-fry with a variety of fresh vegetables and tofu.</p>
-            </div>
+            <!-- Add more recipe cards as needed -->
         </section>
-        <section class="newsletter">
+        <section id="newsletter" class="newsletter">
             <h2>Subscribe to Our Newsletter</h2>
             <p>Stay up-to-date with the latest recipes and food trends. Subscribe to our newsletter.</p>
             <form class="newsletter-form">
@@ -61,3 +60,4 @@
     </footer>
 </body>
 </html>
+
