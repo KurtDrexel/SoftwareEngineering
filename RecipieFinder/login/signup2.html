@@ -2,37 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <!--=============== REMIXICONS ===============-->
-        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-
-        <!--=============== CSS ===============-->
-        <link rel="stylesheet" href="assets/css/styles.css">
-
-        <title>Recipie Finder signup form - Bedimcode</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Recipe Finder Sign Up - Bedimcode</title>
 </head>
 <body>
-    <h1>Sign Up</h1>
-    <form action="/your-server-endpoint" method="POST">
-        <label for="firstname">First Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <br>
-        <label for="lastname">Last Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <br>
-        
-        <button type="submit">Sign Up</button>
-    </form>
+    <div class="container">
+        <div class="login__content">
+            <img src="assets/img/bg-signup.png" alt="signup image" class="login__img">
+            <form action="" class="login__form">
+                <div>
+                    <h1 class="login__title">
+                        <span>Create</span> an Account
+                    </h1>
+                    <p class="login__description">
+                        Sign up to discover amazing recipes.
+                    </p>
+                </div>
+
+                <div>
+                    <div class="login__inputs">
+                        <div>
+                            <label for="input-firstname" class="login__label">First Name</label>
+                            <input type="text" placeholder="Enter your first name" required class="login__input" id="input-firstname">
+                        </div>
+
+                        <div>
+                            <label for="input-lastname" class="login__label">Last Name</label>
+                            <input type="text" placeholder="Enter your last name" required class="login__input" id="input-lastname">
+                        </div>
+
+                        <div>
+                            <label for="input-email" class="login__label">Email</label>
+                            <input type="email" placeholder="Enter your email address" required class="login__input" id="input-email">
+                        </div>
+
+                        <div>
+                            <label for="input-pass" class="login__label">Password</label>
+
+                            <div class="login__box">
+                                <input type="password" placeholder="Enter your password" required class="login__input" id="input-pass">
+                                <i class="ri-eye-off-line login__eye" id="input-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="login__check">
+                        <input type="checkbox" class="login__check-input" id="input-check">
+                        <label for="input-check" class="login__check-label">I agree to the Terms & Conditions</label>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="login__buttons">
+                        <button class="login__button">Sign Up</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
