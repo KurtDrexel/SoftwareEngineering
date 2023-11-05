@@ -2,31 +2,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
+    <title>Homepage</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="login/assets/css/styles.css">
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet"      
+
 </head>
-
 <body>
-    <div class="navbar">
-        <a href="{{ url_for('home') }}" class="navbar-brand">Home</a>
-        <a href="{{ url_for('enternew') }}" class="navbar-item">Add New Student</a>
-        <a href="{{ url_for('list') }}" class="navbar-item">Review and Edit Students</a>
-        <a href="{{ url_for('enternewinstructor') }}" class="navbar-item">Add New Instructor</a>
-        <a href="{{ url_for('enternewcourse') }}" class="navbar-item">Add New Course</a>
-    </div>
-
-    <div class="body-content">
-        {% block content %}
-
-        <h1>Welcome to the University Management System</h1>
-        <p>This is a simple web application to manage students, instructors, and courses.</p>
-        {% endblock %}
-        <hr/>
-        <footer>
-            
-            <p>&copy; 2023 University Management System</p>
-        </footer>
-    </div>
+    <h1></h1>
+    <a href ="index.html" > </ahref><img src="logo/logo_transparent.png" alt="Your Logo">
+        <div class="topnav">
+            <a class="active" href="index.html">Home</a>
+            <a href="#breakfast" href="breakfast/breakfast.html">Breakfast</a>
+            <a href="#lunch" href="lunch/lunch.html">lunch</a>
+            <a href="#dinner" href="dinner/dinner.html">Dinner</a>
+            <a href="#login" href="login/login.html">Login</a>
+        </div>
+    <!--=============== if anything isn't working as it's supposed to please leave a comment like this ===============-->
 </body>
 </html>
