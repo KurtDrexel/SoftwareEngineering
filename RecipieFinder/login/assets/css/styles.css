@@ -191,6 +191,37 @@ img {
   text-decoration: none;
 }
 
+/*=============== TOP NAVIGATION BAR ===============*/
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: hsl(0, 0%, 20%);
+    overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    color: hsl(0, 0%, 95%);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: hsl(26, 70%, 53%);
+    color: rgb(12, 8, 5);
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+    background-color: hsl(0, 0%, 20%);
+    color: hsl(0, 0%, 100%);
+  }
+
+
 /*=============== BREAKPOINTS ===============*/
 /* For small devices */
 @media screen and (max-width: 360px) {
@@ -286,4 +317,38 @@ body {
 .button-label {
     margin-top: 10px;
     font-weight: bold;
+}
+
+
+/*=============== DASHBOARD SIDE NAVIGATION BAR ===============*/
+
+.sidenav {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: var(--side-nav-color);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenav a {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: hsl(0, 0%, 100%);
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.sidenav a:hover {
+  background-color: var(--second-color);
+  color: hsl(0, 0%, 100%);
+}
+
+.content {
+  margin-left: 250px; /* Adjust this margin to match the width of your side navigation */
+  padding: 20px;
 }
