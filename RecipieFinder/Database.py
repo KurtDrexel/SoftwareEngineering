@@ -112,7 +112,7 @@ def breakfast():
 @app.route('/breakfast', methods= ['POST'])
 def breakfast_search():
   search= request.form.get('search')
-  recipes= e.search_recipe(search)
+  recipes= get_recipes(search)
   ret= []
   for i in range(len(recipes.get('hits'))):
     name= recipes.get('hits')[i].get('recipe').get('label')
