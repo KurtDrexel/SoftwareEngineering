@@ -5,11 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from py_edamam import Edamam
 from flask_login import UserMixin
 from flask import flash
-
-e = Edamam(recipes_appid='dd3e08d9',
-           recipes_appkey='db6b2a58e06f801203d035f5914b6877',
-          food_appid='3da38d07',
-            food_appkey='2c641685171d1515f82e620028451f69')
+import requests
 
 #Linking db with Flask /Users/GOD/Desktop/school/447/RecipieFinder/RecipieFinder/RecipieFinder
 app = Flask(__name__, template_folder= ".", static_folder='static', static_url_path='/static')
@@ -18,6 +14,51 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///CMSC447Project_new.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 #Initialize the database
 db = SQLAlchemy(app)
+
+def get_recipes(query, cuisineType= None, mealType= None, dishType=None, diet= None, health= None, random= False):
+    # API endpoint URL
+    url = "https://api.edamam.com/api/recipes/v2"
+
+    # API credentials
+    app_id = "dd3e08d9"
+    app_key = "db6b2a58e06f801203d035f5914b6877"
+
+    # Search parameters
+    params = {
+        "type": "public",
+        "app_id": app_id,
+        "app_key": app_key,
+        "mealType": mealType,
+        "dishType": dishType,
+        'diet': diet,
+        'health': health,
+        'cuisineType': cuisineType,
+        'random': random,
+        'q': query
+    }
+
+    # Optional parameters
+    #meal_type = "Breakfast"
+    #params['q']= 'chicken'
+    # Include optional parameters if provided
+    #if meal_type:
+    #   params["mealType"] = meal_type
+
+    # Make the API request
+    response = requests.get(url, params=params)
+    # Check if the request was successful (status code 200)
+    if response.status_code == 200:
+        # Process the response data (e.g., convert to JSON, print results)
+        recipes = response.json()
+        for i in range(len(recipes.get('hits'))):
+            name= recipes.get('hits')[i].get('recipe').get('label')
+            ingredients= recipes.get('hits')[i].get('recipe').get('ingredients')
+            image= recipes.get('hits')[i].get('recipe').get('image')
+            print(name)
+    else:
+        # Print an error message if the request was not successful
+        print(f"Error: {response.status_code}")
+    return recipes
 
 #All five classes for our data base
 class User(db.Model):
