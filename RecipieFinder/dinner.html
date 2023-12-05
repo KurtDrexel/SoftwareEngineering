@@ -1,0 +1,49 @@
+<!--=============== This is a page for dinner ===============--><!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <title>Dinner</title>
+    </head>
+    <body>
+        <a href ="../index.html" > </a><img src="/static/logo/logo_transparent.png" alt="Your Logo">
+        <div class="topnav">
+            <a href="breakfast" href="../breakfast.html">Breakfast</a>
+            <a href="lunch" href="../lunch.html">lunch</a>
+            <a href="dinner" href="../dinner.html">Dinner</a>
+            <a href="login" href="../login.html">Login</a>
+        </div>
+    
+        <div class="search-container">
+            <form method="POST">
+                <input type="text" placeholder="Search..." name="search">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    
+        <div class="search-results">
+            <h2>Recipes Results:</h2>
+            <ul>
+                {% for recipe in results %}
+                <li>
+                    <h3>        
+                        {{ recipe[0]}}
+                        <li>
+                        <img src="{{ recipe[2] }}" alt="Recipe Image">
+                        </li>
+                        <ul>
+                            {% for ingredient in recipe[1] %}
+                                <li>
+                                    {{ingredient["text"]}}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </h3>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </body>
+    </html>
+    

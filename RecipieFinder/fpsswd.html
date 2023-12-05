@@ -1,0 +1,68 @@
+<!--=============== This is a homepage ===============-->
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">   
+    <title>Forgot Password</title>
+
+</head>
+
+<body>
+    <h1></h1>
+    <a href ="index.html" > </a> <img src="/static/logo/logo_transparent.png" alt="Your Logo">
+    <div class="topnav">
+        <a href = "/" href="../index.html">Home</a>
+            <a href="breakfast" href="../breakfast.html">Breakfast</a>
+            <a href="lunch" href="../lunch.html">lunch</a>
+            <a href="dinner" href="../dinner.html">Dinner</a>
+            <a href = "login" href="../login.html">Login</a>
+    </div>
+
+    <div class="container">
+        <div class="login__content">
+            <img src="static/img/login_img.jpg" alt="reset password image" class="login__img">
+            <!--= CHECK if post works here =-->
+            <form action="{{ url_for('reset_password') }}" method="POST" class="login__form">
+                <div>
+                    <h1 class="login__title">
+                        Reset Your Password
+                    </h1>
+                    <p class="login__description">
+                        Please enter your email address to reset your password.
+                    </p>
+                </div>
+
+                <div>
+                    <div class="login__inputs">
+                        <div>
+                            <label for="input-email" class="login__label">Email</label>
+                            <input type="email" placeholder="Enter your email address" required class="login__input" name ="email" id="input-email">
+                        </div>
+                        <div>
+                            <label for="input-password" class="login__label">New Password</label>
+                            <input type="password" placeholder="Enter your new password" required class="login__input" name = "password1" id="input-password">
+                        </div>
+                        <div>
+                            <label for="input-confirm-password" class="login__label">Confirm New Password</label>
+                            <input type="password" placeholder="Confirm your new password" required class="login__input" name="password2" id="input-confirm-password">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="login__buttons">
+                        <button class="login__button">Reset Password</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--=============== MAIN JS ===============-->
+    <script src="/static/main.js"></script>
+
+</body>
+</html>
+

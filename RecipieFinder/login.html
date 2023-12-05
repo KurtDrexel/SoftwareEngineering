@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/styles.css">
+
+        <title>Login form</title>
+    </head>
+    <body>
+        <a href ="index.html" > </a> <img src="/static/logo/logo_transparent.png" alt="Your Logo">
+        <div class="topnav">
+            <a href = "index" href="../index.html">Home</a>
+            <a href="breakfast" href="../breakfast.html">Breakfast</a>
+            <a href="lunch" href="../lunch.html">lunch</a>
+            <a href="dinner" href="../dinner.html">Dinner</a>
+            <a href = "login" href="../login.html">Login</a>
+            <a href = "signup" href="../signup.html">Signup</a>
+        </div>
+
+        <div class="container">
+            <div class="login__content">
+                <img src="/static/img/login2.jpg" alt="login image" class="login__img">
+
+                <form action="{{ url_for('login_submit') }}" method="POST" class="login__form">
+                   
+                    <div>
+                        <h1 class="login__title">
+                            <span>Welcome</span> Back
+                        </h1>
+                        <p class="login__description">
+                            Welcome! Please login to continue.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        
+                           
+                            <div>
+                                <label for="input-email" class="login__label">Email</label>
+                                <input type="email" placeholder="Enter your email address" required class="login__input" name = "email" id="email">
+                            </div>
+    
+                            <div>
+                                <label for="input-pass" class="login__label">Password</label>
+    
+                                <div class="login__box">
+                                    <input type="password" placeholder="Enter your password" required class="login__input" name = "password" id="password">
+                                    <i class="ri-eye-off-line login__eye" id="input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="login__check">
+                            <input type="checkbox" class="login__check-input" id="input-check">
+                            <label for="input-check" class="login__check-label">Remember me</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="loginbuttons">
+                            <button class="login__button">Log In</button> 
+                        </div>
+
+                        <a href="forgot_password" href="../fpsswd.html" class="login__forgot">Forgot Password?</a>
+                        <a href = "signup" href="../signup.html" class="loginforgot">Sign up</a>
+                    </div>
+               
+                </form>
+            </div>
+        </div>
+
+
+        <!--=============== MAIN JS ===============-->
+        <script src="/static/main.js"></script>
+    </body>
+</html>
