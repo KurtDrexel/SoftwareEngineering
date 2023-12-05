@@ -13,10 +13,18 @@
         <a href="breakfast" href="../breakfast.html">Breakfast</a>
         <a href="lunch" href="../lunch.html">lunch</a>
         <a href="dinner" href="../dinner.html">Dinner</a>
-        <a href="favorites" href="favorites/favorites.html">Favorites</a>
+        <a href="/" href="../index.html">Logout</a>
     </div>
     <div class="content">
         <!-- Your dashboard content goes here -->
+        <body>
+            <h1>Favorites</h1>
+            <ul>
+                {% for fav in favorites %}
+                    <li>{{ fav.recipe_name }}</li>
+                {% endfor %}
+            </ul>
+        </body>
     </div>
 </body>
 </html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/styles.css">
-    <title>Breakfast</title>
+    <title>Recipe</title>
 </head>
 <body>
     <a href ="../index.html" > </a><img src="/static/logo/logo_transparent.png" alt="Your Logo">
@@ -24,26 +24,46 @@
     </div>
 
     <div class="search-results">
-        <h2>Recipes Results:</h2>
-        <ul>
-            {% for recipe in results %}
-            <li>
-                <h3>        
-                    {{ recipe[0]}}
-                    <li>
-                    <img src="{{ recipe[2] }}" alt="Recipe Image">
-                    </li>
-                    <ul>
-                        {% for ingredient in recipe[1] %}
-                            <li>
-                                {{ingredient["text"]}}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </h3>
-            </li>
-            {% endfor %}
-        </ul>
+        {% if results is not none %}
+            <h2 class="results-heading">Here are the results of your search:</h2>
+            <div class="recipe-container">
+                {% for recipe in results %}
+                    <div class="recipe-box">
+                        <!-- Link to the recipe detail page, opens in a new tab -->
+                        <a href="{{ url_for('recipe_detail', recipe_name=recipe[0]) }}" target="_blank" class="recipe-link">
+                            <h3 class="recipe-name">{{ recipe[0] }}</h3>
+                            <img src="{{ recipe[2] }}" alt="Recipe Image" class="recipe-image">
+                            <ul class="ingredients-list">
+                                {% for ingredient in recipe[1] %}
+                                    <li>{{ ingredient["text"] }}</li>
+                                {% endfor %}
+                            </ul>
+                        </a>
+                        
+                        {% if login == True %}
+                            <label class="add-fav">
+                                <input type="checkbox" />
+                                <span class="icon-heart">❤️</span>
+                            </label>
+
+                        {% else %}  
+                            <li>Login to add Favorite</li>
+                        {% endif %}
+
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-results-message"> No recipes found. Try a different search.</p>
+        {% endif %}
     </div>
+    
+    
+   
+    
+    
+    <!--=============== MAIN JS ===============-->
+    <script src="/static/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 </html>

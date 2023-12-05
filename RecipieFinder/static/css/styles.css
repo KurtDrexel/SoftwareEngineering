@@ -202,7 +202,7 @@ img {
 /* For medium devices */
 @media screen and (min-width: 576px) {
   .login__form {
-    width: 450px;
+    width: 460px;
     justify-self: center;
   }
 }
@@ -292,7 +292,7 @@ img {
 
 
 /*=============== DASHBOARD NAVIGATION BAR ===============*/
-/* Styling the navigation menu container for dashboard */
+/* Styling the navigation menu container for dashboard STILL WORKING ON THIS */
 
 .sidenav {
   height: 100%;
@@ -323,4 +323,188 @@ img {
 .content {
   margin-left: 250px; /* Adjust this margin to match the width of your side navigation */
   padding: 20px;
+}
+
+/* for */
+.search-results ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  list-style: none;
+}
+
+.recipe-box {
+  /* Add your styling for each recipe box */
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+/*=============== HOMEPAGE CAROUSEL SLIDER ===============*/
+
+.carasoul {
+  padding: 2rem;
+}
+
+.slider-wrapper {
+  position: relative;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.slider {
+  display: flex;
+  aspect-ratio: 16 / 9;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  box-shadow: 0 1.5rem 3rem -0.75rem rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+.slider img {
+  flex: 1 0 100%;
+  scroll-snap-align: start;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.slider-nav {
+  display: flex;
+  column-gap: 1rem;
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.slider-nav a {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: #61dafb;
+  opacity: 0.8;
+  transition: background-color ease 250ms, opacity ease 250ms;
+}
+
+.slider-nav a:hover {
+  background-color: #ff8c00;
+  opacity: 1;
+}
+
+
+/*=============== SEARCH BAR ===============*/
+
+
+.search-container {
+  margin: 20px auto; /* Center the search bar and add some space around it */
+  text-align: center; /* Center the text within the search-container */
+}
+
+.search-container form {
+  display: inline-block; /* Keep the form centered */
+}
+
+.search-container input[type="text"] {
+  width: 600px; /* Increase the width of the search input */
+  padding: 25px; /* Increase the padding for a larger input */
+  font-size: 28px; /* Adjust font size as needed */
+  border: 3px solid #ccc; /* Add a border to the input */
+  border-radius: 40px; /* Set border radius for rounded corners */
+  outline: none; /* Remove the default input focus outline */
+}
+
+.search-container button {
+  padding: 15px 20px; /* Increase the padding for a larger button */
+  font-size: 16px; /* Adjust font size as needed */
+  border: 1px solid #ccc; /* Add a border to the button */
+  border-radius: 20px; /* Set border radius for rounded corners */
+  background-color: #ff5733; /* Set background color for the button */
+  color: #fff; /* Set text color for the button */
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background-color: #ff8c00; /* Change background color on hover */
+}
+
+
+
+/*=============== RECIPE GRID DISPLAY ===============*/
+
+.search-results {
+  margin-top: 20px;
+  text-align: center; /* Center the text within the search-results container */
+}
+
+.results-heading {
+  color: #ff5733; /* Set color for "Recipes Results:" */
+  font-size: 24px; /* Adjust font size as needed */
+  margin-bottom: 10px; /* Add space below the heading */
+  display: inline-block; /* Keep the heading centered */
+  background-color: peachpuff; /* Set background color for heading */
+  padding: 5px 10px; /* Add padding to the heading */
+  border-radius: 8px; /* Add border-radius for rounded corners */
+}
+
+.no-results-message {
+  color: #ff5733; /* Set color for the "No recipes found" message */
+  font-size: 16px; /* Adjust font size as needed */
+}
+
+
+.recipe-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 20px; /* Add padding for spacing */
+}
+
+.recipe-box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+  background-color: peachpuff; /* Set the background color for each recipe box */
+  border-radius: 8px; /* Add border-radius for rounded corners */
+}
+
+.recipe-box:hover {
+  transform: scale(1.05);
+}
+
+.recipe-name {
+  color: var(--title-color); /* Set color for "recipe-name" */
+  font-size: 18px; /* Adjust font size as needed */
+  margin-bottom: 10px; /* Add space below the recipe name */
+}
+
+.recipe-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #010e01; /* Set color for "ingredients-list" */
+  display: none; /* Initially hide the ingredients list */
+}
+
+.recipe-box.active .ingredients-list {
+  display: block; /* Show the ingredients list when the recipe is active */
+}
+
+.recipe-container a {
+  text-decoration: none;
 }

@@ -17,8 +17,15 @@
             <a href="breakfast" href="../breakfast.html">Breakfast</a>
             <a href="lunch" href="../lunch.html">Lunch</a>
             <a href="dinner" href="../dinner.html">Dinner</a>
-            <a href="login" href="../login.html">Login</a>
+            {% if login == True %}
+                <a href="favorites" href="../favorites.html">Favorites</a>
+                <p> Logout goes here </p>
+            {% else %}
+                <a href="login" href="../login.html">Login</a>
+                <a href = "signup" href="../signup.html">Signup</a>
+            {% endif %}
         </div>
+
 
 </body>
 </html>

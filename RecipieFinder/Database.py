@@ -1,16 +1,16 @@
 #Importing
 import json
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
-from py_edamam import Edamam
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user, login_required
 from flask import flash
+#from sqlalchemy.orm import relationship
 import requests
 
 #Linking db with Flask /Users/GOD/Desktop/school/447/RecipieFinder/RecipieFinder/RecipieFinder
 app = Flask(__name__, template_folder= ".", static_folder='static', static_url_path='/static')
 app.secret_key = 'secret'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///CMSC447Project_new.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///CMSC447Project_new5.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 #Initialize the database
 db = SQLAlchemy(app)
@@ -36,13 +36,6 @@ def get_recipes(query, cuisineType= None, mealType= None, dishType=None, diet= N
         'random': random,
         'q': query
     }
-
-    # Optional parameters
-    #meal_type = "Breakfast"
-    #params['q']= 'chicken'
-    # Include optional parameters if provided
-    #if meal_type:
-    #   params["mealType"] = meal_type
 
     # Make the API request
     response = requests.get(url, params=params)
@@ -72,7 +65,7 @@ class User(db.Model):
 class Recipes(db.Model):
     recipe_id = db.Column(db.Integer, primary_key=True)
     recipe_name = db.Column(db.String(50), nullable= False)
-    ingred_array = db.Column(db.String)#ingredients seperate by commas
+    #ingred_array = db.Column(db.String)#ingredients seperate by commas
     time_of_day = db.Column(db.String(50), nullable= False)
     
     def __repr__(self):
@@ -81,25 +74,30 @@ class Recipes(db.Model):
     #def __repr__(self):
     #  return f'<Recipe {self.recipe_name}>'
 
-    def set_ingredients(self, ingredients):
-      self.ingred_array = json.dumps(ingredients)
+   # def set_ingredients(self, ingredients):
+    #  self.ingred_array = json.dumps(ingredients)
 
-    def get_ingredients(self):
-      return json.loads(self.ingred_array) if self.ingred_array else []
+  #  def get_ingredients(self):
+  #    return json.loads(self.ingred_array) if self.ingred_array else []
 
-
+class login_status(db.Model):
+    id = db.Column(db.Integer, primary_key=True)# Define a primary key
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    login= db.Column(db.Boolean, nullable= False)
 
 class Favorites(db.Model):
     id = db.Column(db.Integer, primary_key=True)# Define a primary key
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.recipe_id'))
-    fav_ingred_array = db.Column(db.String)#ingredients seperated by commas
+    recipe_name =  db.Column(db.Integer, db.ForeignKey('recipes.recipe_name'))
+    # fav_ingred_array = db.Column(db.String)#ingredients seperated by commas
     def __repr__(self):
-      return (self.recipe_id)
+      return f"Favorites(user_id={self.user_id},recipe_name= {self.recipe_name})"
     
 @app.route('/')
 def home():
-    return render_template('index.html')
+    login = session.get('login', False)
+    user= session.get('user', None)
+    return render_template('index.html', login= login)
 
 @app.route('/signup')
 def signup():
@@ -107,6 +105,8 @@ def signup():
 
 @app.route('/breakfast')
 def breakfast():
+    login = session.get('login', False)
+    user= session.get('user', None)
     return render_template('breakfast.html')
 
 @app.route('/breakfast', methods= ['POST'])
@@ -119,7 +119,28 @@ def breakfast_search():
     ingredients= recipes.get('hits')[i].get('recipe').get('ingredients')
     image= recipes.get('hits')[i].get('recipe').get('image')
     ret.append([name, ingredients, image])
-  return render_template('/breakfast.html', results= ret)
+  login = session.get('login', False)
+  user= session.get('user', None)
+  return render_template('/breakfast.html', results= ret, login = login, user = user)
+
+@app.route('/recipe_detail/<string:recipe_name>')
+def recipe_detail(recipe_name):
+    # Fetch recipe details based on recipe_name from the database or API
+    # For now, let's pass a placeholder dictionary as an example
+  recipes= get_recipes(recipe_name)
+  ret=[]
+  for i in range(len(recipes.get('hits'))):
+    name= recipes.get('hits')[i].get('recipe').get('label')
+    if name== recipe_name:
+      ingredients= recipes.get('hits')[i].get('recipe').get('ingredients')
+      image= recipes.get('hits')[i].get('recipe').get('image')
+  print(ingredients)
+  recipe_details = {
+      'recipe_name': recipe_name,
+      'ingredients': ingredients,
+      'image': image,
+    }
+  return render_template('recipe_detail.html', recipe=recipe_details)
 
 @app.route('/lunch')
 def lunch():
@@ -132,6 +153,39 @@ def dinner():
 @app.route('/login', methods=['GET'])
 def login():
     return render_template('login.html')
+
+@app.route('/', methods=['POST'])
+def Save_favorite():
+   if request.method == 'POST':
+      recipe_name = request.form['recipe_name']
+      user_name = session.get('user')
+      ingredients = request.form['ingredients']
+      time_of_day = request.form['time_of_day'] 
+      print(f"Username: {user_name}, recipe_name: {recipe_name}")
+
+      user = User.query.filter_by(user_name = user_name).first()
+
+      if user:
+        #  recipe =Recipes(
+        #     recipe_name = recipe_name,
+        #     time_of_day = time_of_day,
+        #  )
+        #  recipe.set_ingredients(json.loads(ingredients))
+
+        #  db.session.add(recipe)
+
+         favorite = Favorites(user_id=user.user_id, recipe_name = recipe_name)
+
+         db.session.add(favorite)
+         db.session.commit()
+
+         print(f"Recipe '{recipe_name}' saved as a favorite for {user_name}!")
+         
+      return redirect(url_for('home'))
+
+
+# @app.route('/', methods=['POST'])
+# def Remove_favorite():
 
 @app.route('/forgot_password', methods=['POST'])
 def reset_password():
@@ -202,46 +256,80 @@ def login_submit():
           
          if user.user_name== email and user.user_password== password:#correct user and password
             print("user found, and password is correct")
-            login= True        
-            return redirect(url_for('home'))
-  #print("User not found")#username not found
+            session['login']= True
+            session['user'] = user.user_name
+            login = session.get('login')
+            user= session.get('user')   
+            return render_template('index.html', login= login)
+  print("User not found")#username not found
+  session['login']= False
+  session['user']= None
   return render_template('login.html')
 
 @app.route('/favorites')
 def saved():
-  favorites= Favorites.query.all()
-  return render_template('/saved', favorites)
+ 
+  # fav1 = Favorites(user_id= 1, recipe_name = "Scrambled eggs")
+  # db.session.add(fav1)
+  # db.session.commit()
+  
+  # fav2 = Favorites(user_id= 1, recipe_name = "steak")
+  # db.session.add(fav2)
+  # db.session.commit()
 
-@app.route('/add_favorite', methods=['POST'])
-def add_favorite():
-  add_recipe= request.form['favorite']
-  user_name= request.form['user']
-  recipes= Recipes.query.all()
-  favorites= Favorites.query.all()
+  # fav3 = Favorites(user_id= 2, recipe_name = "Pork")
+  # db.session.add(fav3)
+  # db.session.commit()
+  #fav = Favorites.query.filter_by(user_id= testid).all()
   users= User.query.all()
-
-  recipe_found= False
-  recipe_id= None
-  for recipe in recipes:
-     if recipe.recipe_name== add_recipe:
-        recipe_id= recipe.recipe_id 
-        recipe_found = True
-
-  user_id = None
+  Uid = -1
+  login= False
   for user in users:
-     if user.user_name== user_name:
-        user_id= user.user_id
+    if user.user_name == session['user']:
+       Uid = user.user_id
+  print(f"Uid:{Uid}")
+  fav= Favorites.query.all()
+  results = []
+  for favor in fav:
+     if favor.user_id ==  Uid:
+        results.append(favor)
 
-  if recipe_found== True:
-    add_fav= True
-    for favorite in favorites:
-      if favorite.recipe_id== recipe_id and favorite.user_id== user_id:
-        add_fav= False
-    if add_fav == True:
-      new_favorite= Favorites(user_id= user_id, recipe_id= recipe_id)
-      db.session.add(new_favorite)
-      db.session.commit()
-  return render_template('/saved', favorites)
+
+  print("fav")
+  print(f"{results}")
+  return render_template('favorites.html', favorites= results)
+
+
+# @app.route('/add_favorite', methods=['POST'])
+# def add_favorite():
+#   add_recipe= request.form['favorite']
+#   user_name= request.form['user']
+#   recipes= Recipes.query.all()
+#   favorites= Favorites.query.all()
+#   users= User.query.all()
+
+#   recipe_found= False
+#   recipe_id= None
+#   for recipe in recipes:
+#      if recipe.recipe_name== add_recipe:
+#         recipe_id= recipe.recipe_id 
+#         recipe_found = True
+
+#   user_id = None
+#   for user in users:
+#      if user.user_name== user_name:
+#         user_id= user.user_id
+
+#   if recipe_found== True:
+#     add_fav= True
+#     for favorite in favorites:
+#       if favorite.recipe_id== recipe_id and favorite.user_id== user_id:
+#         add_fav= False
+#     if add_fav == True:
+#       new_favorite= Favorites(user_id= user_id, recipe_id= recipe_id)
+#       db.session.add(new_favorite)
+#       db.session.commit()
+#   return render_template('/saved', favorites)
 
 @app.route('/forgot_password')
 def forgot_password():
@@ -251,16 +339,4 @@ if __name__== "__main__":
   with app.app_context():
    
     db.create_all()
-    # Example of using the Recipes class
-    #user= User(user_name= "user1", user_password= "password1")
-    #ingredients = ["ingredient1", "ingredient2", "ingredient3"]
-   # recipe = Recipes(recipe_name="Example Recipe", time_of_day="Morning")
-   # recipe.set_ingredients(ingredients)
-    #db.session.add(user)
-    #db.session.commit()
-
-  # Retrieving ingredients
-  #recipe = Recipes.query.first()
-  #ingredients = recipe.get_ingredients()
- # print(ingredients)
   app.run(debug=True)
