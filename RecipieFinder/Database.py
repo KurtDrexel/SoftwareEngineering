@@ -1,9 +1,8 @@
 #Importing
 import json
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, current_user, login_required
-from flask import flash
 #from sqlalchemy.orm import relationship
 import requests
 import re
@@ -16,7 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 #Initialize the database
 db = SQLAlchemy(app)
 
-def get_id(url):
+def get_recipe_id(url):
     # Use regular expression to extract the id after "recipe_"
     match = re.search(r'recipe_(\w+)$', url)
     recipe_id = match.group(1)
@@ -147,13 +146,21 @@ def Search():
   search= request.form.get('search')
   cuisinetype= request.form.get('cuisineType')
   mealType = request.form.get('mealType')
+
+  if cuisinetype== "None":
+    cuisinetype= None
+  if mealType== "None":
+     mealType= None
+
   recipes= get_recipes(search, cuisineType= cuisinetype, mealType= mealType)
   ret= []
   for i in range(len(recipes.get('hits'))):
     name= recipes.get('hits')[i].get('recipe').get('label')
     ingredients= recipes.get('hits')[i].get('recipe').get('ingredients')
     image= recipes.get('hits')[i].get('recipe').get('image')
-    ret.append([name, ingredients, image])
+    id= get_recipe_id(recipes.get('hits')[i].get('recipe').get('uri'))
+    ret.append([name, ingredients, image, id])
+    print(id)
   login = session.get('login', False)
   user= session.get('user', None)
   return render_template('/search.html', results= ret, login = login, user = user)
@@ -163,38 +170,45 @@ def breakfast_search():
   search= request.form.get('search')
   cuisinetype= request.form.get('cuisineType')
   mealType = request.form.get('mealType')
+
+  if cuisinetype== "None":
+    cuisinetype= None
+  if mealType== "None":
+     mealType= None
+
   recipes= get_recipes(search, cuisineType= cuisinetype, mealType= mealType)
   ret= []
   for i in range(len(recipes.get('hits'))):
     name= recipes.get('hits')[i].get('recipe').get('label')
     ingredients= recipes.get('hits')[i].get('recipe').get('ingredients')
     image= recipes.get('hits')[i].get('recipe').get('image')
-    ret.append([name, ingredients, image])
+    id= get_recipe_id(recipes.get('hits')[i].get('recipe').get('uri'))
+    ret.append([name, ingredients, image, id])
+    print(id)
   login = session.get('login', False)
   user= session.get('user', None)
   return render_template('/breakfast.html', results= ret, login = login, user = user)
 
 
 @app.route('/recipe_detail/<string:recipe_name>')
-def recipe_detail(recipe_name):
+def recipe_detail(recipe_id):
+  print(recipe_id)
     # Fetch recipe details based on recipe_name from the database or API
     # For now, let's pass a placeholder dictionary as an example
-  recipes= get_recipes(recipe_name)
-
-  for i in range(len(recipes.get('hits'))):
-    name= recipes.get('hits')[i].get('recipe').get('label')
-    if name== recipe_name:
-      ingredients= recipes.get('hits')[i].get('recipe').get('ingredients')
-      image= recipes.get('hits')[i].get('recipe').get('image')
-      calories= recipes.get('hits')[i].get('recipe').get('calories')
-      mealType=recipes.get('hits')[i].get('recipe').get('mealType')
-      dishType= recipes.get('hits')[i].get('recipe').get('dishType')
-      dietLabels= recipes.get('hits')[i].get('recipe').get('dietLabels')
-      healthLabels= recipes.get('hits')[i].get('recipe').get('healthLabels')
-      url=  recipes.get('hits')[i].get('recipe').get('url')
+  print("This is ", recipe_id)
+  recipe = find_recipes(recipe_id)
+  name= recipe.get('recipe').get('label')
+  ingredients= recipe.get('recipe').get('ingredients')
+  image= recipe.get('recipe').get('image')
+  calories= recipe.get('recipe').get('calories')
+  mealType=recipe.get('recipe').get('mealType')
+  dishType= recipe.get('recipe').get('dishType')
+  dietLabels= recipe.get('recipe').get('dietLabels')
+  healthLabels= recipe.get('recipe').get('healthLabels')
+  url=  recipe.get('recipe').get('url')
 
   recipe_details = {
-    'recipe_name': recipe_name,
+    'recipe_name': name,
     'ingredients': ingredients,
     'image': image,
     'calories': calories,
@@ -239,7 +253,7 @@ def Save_favorite():
       print(f"Username: {user_name}, recipe_name: {recipe_name}")
 
       if not (recipe_name and user_name and ingredients and time_of_day):
-            return jsonify({'error': 'Missing required data'}), 400
+        return jsonify({'error': 'Missing required data'}), 400
 
       user = User.query.filter_by(user_name = user_name).first()
 
