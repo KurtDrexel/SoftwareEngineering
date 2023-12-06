@@ -399,6 +399,20 @@ img {
 }
 
 
+/*=============== ABOUT US ===============*/
+
+.about {
+
+  border: 1px solid black;
+  margin-top: 30px;
+  margin-bottom: 100px;
+  margin-right: 250px;
+  margin-left: 240px;
+  background-color: hsl(42, 68%, 68%);
+  color: hsl(44, 65%, 3%);
+}
+
+
 /*=============== SEARCH BAR ===============*/
 .search-container {
   margin: 20px auto; /* Center the search bar and add some space around it */
