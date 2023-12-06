@@ -6,6 +6,7 @@ from flask_login import UserMixin, current_user, login_required
 from flask import flash
 #from sqlalchemy.orm import relationship
 import requests
+import re
 
 #Linking db with Flask /Users/GOD/Desktop/school/447/RecipieFinder/RecipieFinder/RecipieFinder
 app = Flask(__name__, template_folder= ".", static_folder='static', static_url_path='/static')
@@ -14,6 +15,32 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///CMSC447Project_new5.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 #Initialize the database
 db = SQLAlchemy(app)
+
+def get_id(url):
+    # Use regular expression to extract the id after "recipe_"
+    match = re.search(r'recipe_(\w+)$', url)
+    recipe_id = match.group(1)
+    return recipe_id
+
+def find_recipes(id):
+    # API endpoint URL
+    url = "https://api.edamam.com/api/recipes/v2/"
+    url+= id
+    # API credentials
+    app_id = "dd3e08d9"
+    app_key = "db6b2a58e06f801203d035f5914b6877"
+
+    # Search parameters
+    params = {
+        "type": "public",
+        "app_id": app_id,
+        "app_key": app_key,
+    }
+
+    # Make the API request
+    response = requests.get(url, params=params)
+    recipes = response.json()
+    return recipes
 
 def get_recipes(query, cuisineType= None, mealType= None, dishType=None, diet= None, health= None, random= False):
     # API endpoint URL
