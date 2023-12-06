@@ -513,14 +513,19 @@ img {
   text-decoration: none;
 }
 
-/*===============   EXTERNAL TAB ===============*/
-
-
+/*===============   EXTERNAL TAB RECIPE_DETAIL===============*/
 .recipe-detail-body {
   
   justify-content: center;
   align-items: center;
   
+}
+
+.recipe-detail-container {
+  max-width: 900px;
+  padding: 90px;
+  background-color: #fff; /* Set the background color for the box */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional box shadow */
 }
 
 .recipe-box {
@@ -545,6 +550,7 @@ img {
 .ingredients-list li {
   margin-bottom: 5px;
 }
+
 
 
 /*=============== ADD FAV===============*/
