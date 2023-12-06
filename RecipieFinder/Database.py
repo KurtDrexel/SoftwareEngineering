@@ -158,23 +158,36 @@ def breakfast_search():
   user= session.get('user', None)
   return render_template('/breakfast.html', results= ret, login = login, user = user)
 
+
 @app.route('/recipe_detail/<string:recipe_name>')
 def recipe_detail(recipe_name):
     # Fetch recipe details based on recipe_name from the database or API
     # For now, let's pass a placeholder dictionary as an example
   recipes= get_recipes(recipe_name)
-  ret=[]
+
   for i in range(len(recipes.get('hits'))):
     name= recipes.get('hits')[i].get('recipe').get('label')
     if name== recipe_name:
       ingredients= recipes.get('hits')[i].get('recipe').get('ingredients')
       image= recipes.get('hits')[i].get('recipe').get('image')
-  print(ingredients)
+      calories= recipes.get('hits')[i].get('recipe').get('calories')
+      mealType=recipes.get('hits')[i].get('recipe').get('mealType')
+      dishType= recipes.get('hits')[i].get('recipe').get('dishType')
+      dietLabels= recipes.get('hits')[i].get('recipe').get('dietLabels')
+      healthLabels= recipes.get('hits')[i].get('recipe').get('healthLabels')
+      url=  recipes.get('hits')[i].get('recipe').get('url')
+
   recipe_details = {
-      'recipe_name': recipe_name,
-      'ingredients': ingredients,
-      'image': image,
-    }
+    'recipe_name': recipe_name,
+    'ingredients': ingredients,
+    'image': image,
+    'calories': calories,
+    'mealType': mealType,
+    'dishType': dishType,
+    'dietLabels': dietLabels,
+    'healthLabels': healthLabels,
+    'url': url
+  }
   return render_template('recipe_detail.html', recipe=recipe_details)
 
 @app.route('/lunch')
