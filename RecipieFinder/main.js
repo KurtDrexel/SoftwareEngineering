@@ -42,4 +42,29 @@ const showHiddenPass = (inputPass, inputIcon) =>{
     });
 });
 
+/*=============== SHOW RECIPE IN NEW TAB ===============*/
 
+function openRecipeDetails(name, ingredients, image) {
+    // Encode ingredients as a JSON string
+    const encodedIngredients = encodeURIComponent(JSON.stringify(ingredients));
+
+    // Open the new tab with the recipe details in the URL
+    window.open(`/recipe_detail/${name}?ingredients=${ingredients}&image=${image}`, '_blank');
+}
+
+
+/*=============== SEARCH BAR DROP DOWN  ===============*/
+// script.js
+function validateForm() {
+    var searchInput = document.forms[0]["search"].value;
+    var mealTypeSelect = document.forms[0]["mealType"].value;
+
+    // Check if both search input and meal type are provided
+    if (searchInput === "" || mealTypeSelect === "") {
+        alert("Please enter a search term and select a meal type.");
+        return false;
+    }
+    return true;
+}
+
+/*=============== SLIDER WITH IMAGE ===============*/
