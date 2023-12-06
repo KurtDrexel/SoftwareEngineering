@@ -1,4 +1,3 @@
-<!-- recipe_detail.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,46 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/styles.css">
     <title>Recipe Detail</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+            background-color: hsl(42, 63%, 72%) 
+        }
+
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        .recipe-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        .recipe-details {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .recipe-details p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+       
+    </style>
+
 </head>
 <body>
-    <h2>{{ recipe.recipe_name }} </h2>
-    <img src="{{ recipe.image }}" alt="{{ recipe.recipe_name }} Image" class="recipe-image">
-    
-    Here is the recipe
+
+    <div class="recipe-detail-container">
+        <h2>{{ recipe.recipe_name }}</h2>
+        <img src="{{ recipe.image }}" alt="{{ recipe.recipe_name }} Image" class="recipe-image">
+        <br>
         {% for ingredient in recipe.ingredients %}
             <li>{{  ingredient["text"] }}</li>
         {% endfor %}
-        {{recipe.calories}}
-        {{recipe.mealType[0]}}
-        {{recipe.dishType[0]}}
-        {{recipe.dietType}}
-        {% for diet in recipe.dietLabels %}
-            {{diet}}
-        {% endfor %}
-
-        {% for healthlabel in recipe.healthLabels %}
+        <br>
+        <li> <b>Calories: </b> {{recipe.calories}} </li>
+        <li> <b>Meal Type: </b> {{recipe.mealType[0]}}</li>
+        <li> <b>Dish Type: </b> {{recipe.dishType[0]}} </li>
+        <br>
+        <b>Health labels: </b> 
+        {% for healthlabel in recipe.healthLabels %}         
             {{healthlabel}}
         {% endfor %}
-        {{recipe.url}}
         
-    <ul class="ingredients-list">
-        Here is the recipe
-        {% for ingredient in recipe.ingredients %}
-            <li>{{  ingredient["text"] }}</li>
-        {% endfor %}
-        {{recipe.calories}}
-        {{recipe.mealType}}
-        {{recipe.dishType}}
-        {{recipe.dietType}}
-        {% for diet in recipe.dietLabels %}
-            {{diet}}
-        {% endfor %}
+    </div>
 
-        {% for healthlabel in recipe.healthLabels %}
-            {{healthlabel}}
-        {% endfor %}
-
-        {{recipe.url}}
-    </ul>
 </body>
 </html>
