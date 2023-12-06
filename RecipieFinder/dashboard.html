@@ -7,15 +7,25 @@
     <title>Dashboard</title>
 </head>
 <body>
+    <img src="static/logo/logo_transparent.png" alt="Your Logo">
     <div class="sidenav">
-        <img src="static/logo/logo_transparent.png" alt="Your Logo">
-        <a href="breakfast" href="breakfast.html">Breakfast</a>
-        <a href="lunch" href="lunch.html">lunch</a>
-        <a href="dinner" href="dinner.html">Dinner</a>
-        <a href="favorites" href="favorites.html">Favorites</a>
+        <a href="search" href="search.html">Search Recipe</a>
+        <a href="login" href="{{ url_for('logout') }}">Logout</a>
+
     </div>
     <div class="content">
         <!-- Your dashboard content goes here -->
+        <h1>Favorites</h1>
+        <ul>
+            {% for fav in favorites %}
+                <li>{{ fav.recipe_name }}
+                    <form method="post" action="{{ url_for('Remove_favorite') }}">
+                        <input type="hidden" name="favorite_id" value="{{ fav.recipe_name }}">
+                        <button type="submit">Remove from Favorites</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 </body>
 </html>

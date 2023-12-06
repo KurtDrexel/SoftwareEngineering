@@ -5,51 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/styles.css">
-    <title>Recipe</title>
+    <title> Search </title>
 </head>
 <body>
-    <img src="/static/logo/logo_transparent.png" alt="Your Logo">
-    <div class="topnav">
-        <a href="/" href="../index.html">Home</a>
-        <a href="login" href="../login.html">Login</a>
-        <a href = "signup" href="../signup.html">Signup</a>
+    <a href ="../index.html" > </a><img src="/static/logo/logo_transparent.png" alt="Your Logo">
+    <div class="sidenav">
+        <a href = "dashboard" href="../dashboard.html">dashboard</a>
+        <a href="search" href="../search.html">Search Recipe</a>
+        <a href="login" href="../breakfast.html">Logout</a>
     </div>
 
     <div class="search-container">
         <form method="POST" onsubmit="return validateForm()">
             <select name="cuisineType" required>
                 <option value="">Select Cuisine Type</option>
-                <option value="American">American</option>
-                <option value="Asian">Asian</option>
-                <option value="British">British</option>
-                <option value="Caribbean">Caribbean</option>
-                <option value="Central Europe">Central Europe</option>
-                <option value="Chinese">Chinese</option>
-                <option value="Eastern Europe">Eastern Europe</option>
-                <option value="French">French</option>
-                <option value="Greek">Greek</option>
-                <option value="Indian">Indian</option>
-                <option value="Italian">Italian</option>
-                <option value="Japanese">Japanese</option>
-                <option value="Korean">Korean</option>
-                <option value="Kosher">Kosher</option>
-                <option value="Mediterranean">Mediterranean</option>
-                <option value="Mexican">Mexican</option>
-                <option value="Middle Eastern">Middle Eastern</option>
-                <option value="Nordic">Nordic</option>
-                <option value="South American">South American</option>
-                <option value="South East Asian">South East Asian</option>
-                <option value="World">World</option>
+                <option value="american">none</option>
+                <option value="american">American</option>
+                <option value="asian">Asian</option>
+                <option value="british">British</option>
+                <option value="caribbean">Caribbean</option>
+                <option value="central europe">Central Europe</option>
+                <option value="chinese">Chinese</option>
+                <option value="eastern europe">Eastern Europe</option>
+                <option value="french">French</option>
+                <option value="greek">Greek</option>
+                <option value="indian">Indian</option>
+                <option value="italian">Italian</option>
+                <option value="japanese">Japanese</option>
+                <option value="korean">Korean</option>
+                <option value="kosher">Kosher</option>
+                <option value="mediterranean">Mediterranean</option>
+                <option value="mexican">Mexican</option>
+                <option value="middle eastern">Middle Eastern</option>
+                <option value="nordic">Nordic</option>
+                <option value="south american">South American</option>
+                <option value="south east asian">South East Asian</option>
+                <option value="world">World</option>
             </select>
             
             <select name="mealType" required>
                 <option value="">Select Meal Type</option>
-                <option value="Breakfast">Breakfast</option>
-                <option value="Brunch">Brunch</option>
-                <option value="Lunch">Lunch</option>
-                <option value="Dinner">Dinner</option>
-                <option value="Snack">Snack</option>
-                <option value="Teatime">Teatime</option>
+                <option value="breakfast">None</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="brunch">Brunch</option>
+                <option value="lunch/dinner">Lunch/Dinner</option>
+                <option value="snack">Snack</option>
+                <option value="teatime">Teatime</option>
             </select>
             <input type="text" placeholder="Search..." name="search" required>
             <button type="submit">Search</button>

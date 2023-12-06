@@ -9,22 +9,26 @@
 <body>
     <!-- updated with the side navigation -->
     <div class="sidenav">
-        <img src="static/logo/logo_transparent.png" alt="Your Logo">
-        <a href="breakfast" href="../breakfast.html">Breakfast</a>
-        <a href="lunch" href="../lunch.html">lunch</a>
-        <a href="dinner" href="../dinner.html">Dinner</a>
-        <a href="/" href="../index.html">Logout</a>
+        <img src="/static/logo/logo_transparent.png" alt="Your Logo">
+            <a href = "/" href="../">Home</a>
+            <a href="breakfast" href="../breakfast.html">Search Recipe</a>
+            <a href = "signup" href="../signup.html">Sign out</a>
+        </div>
+        <a href= "/" href="../index.html">Logout</a>
     </div>
     <div class="content">
         <!-- Your dashboard content goes here -->
-        <body>
-            <h1>Favorites</h1>
-            <ul>
-                {% for fav in favorites %}
-                    <li>{{ fav.recipe_name }}</li>
-                {% endfor %}
-            </ul>
-        </body>
+        <h1>Favorites</h1>
+        <ul>
+            {% for fav in favorites %}
+                <li>{{ fav.recipe_name }}
+                    <form method="post" action="{{ url_for('Remove_favorite') }}">
+                        <input type="hidden" name="favorite_id" value="{{ fav.recipe_name }}">
+                        <button type="submit">Remove from Favorites</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 </body>
 </html>

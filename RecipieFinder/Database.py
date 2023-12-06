@@ -20,8 +20,8 @@ def get_recipes(query, cuisineType= None, mealType= None, dishType=None, diet= N
     url = "https://api.edamam.com/api/recipes/v2"
 
     # API credentials
-    app_id = "dd3e08d9"
-    app_key = "db6b2a58e06f801203d035f5914b6877"
+    app_id = "4e1c4b9e"
+    app_key = "c07ac735f49f7a715321d4fe7f5e71de"
 
     # Search parameters
     params = {
@@ -39,6 +39,8 @@ def get_recipes(query, cuisineType= None, mealType= None, dishType=None, diet= N
 
     # Make the API request
     response = requests.get(url, params=params)
+    print(url, params)
+    recipes=[]
     # Check if the request was successful (status code 200)
     if response.status_code == 200:
         # Process the response data (e.g., convert to JSON, print results)
@@ -103,6 +105,10 @@ def home():
 def signup():
     return render_template('signup.html')
 
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
 @app.route('/breakfast')
 def breakfast():
     login = session.get('login', False)
@@ -112,7 +118,9 @@ def breakfast():
 @app.route('/breakfast', methods= ['POST'])
 def breakfast_search():
   search= request.form.get('search')
-  recipes= get_recipes(search)
+  cuisinetype= request.form.get('cuisineType')
+  mealType = request.form.get('mealType')
+  recipes= get_recipes(search, cuisineType= cuisinetype, mealType= mealType)
   ret= []
   for i in range(len(recipes.get('hits'))):
     name= recipes.get('hits')[i].get('recipe').get('label')
@@ -150,9 +158,19 @@ def lunch():
 def dinner():
     return render_template('dinner.html')
 
+
+@app.route('/search')
+def search():
+    return render_template('search.html')
+
 @app.route('/login', methods=['GET'])
 def login():
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+   session.clear()
+   return redirect(url_for('home'))
 
 @app.route('/', methods=['POST'])
 def Save_favorite():
@@ -181,11 +199,23 @@ def Save_favorite():
 
          print(f"Recipe '{recipe_name}' saved as a favorite for {user_name}!")
          
-      return redirect(url_for('home'))
+      return redirect(url_for('dashboard'))
 
 
-# @app.route('/', methods=['POST'])
-# def Remove_favorite():
+@app.route('/favorites', methods=['POST'])
+def Remove_favorite():
+    fav_name = request.form['favorite_id']
+    favorite_to_remove = Favorites.query.filter_by(recipe_name=fav_name).first()
+
+    if favorite_to_remove:
+        db.session.delete(favorite_to_remove)
+        db.session.commit()
+        print("Item has been successfully removed")
+    else:
+        print("Favorite not found")
+
+    return redirect(url_for('saved'))
+
 
 @app.route('/forgot_password', methods=['POST'])
 def reset_password():
@@ -260,7 +290,7 @@ def login_submit():
             session['user'] = user.user_name
             login = session.get('login')
             user= session.get('user')   
-            return render_template('index.html', login= login)
+            return render_template('dashboard.html', login= login)
   print("User not found")#username not found
   session['login']= False
   session['user']= None
@@ -297,7 +327,7 @@ def saved():
 
   print("fav")
   print(f"{results}")
-  return render_template('favorites.html', favorites= results)
+  return render_template('dashboard.html', favorites= results)
 
 
 # @app.route('/add_favorite', methods=['POST'])
