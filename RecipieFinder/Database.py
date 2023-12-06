@@ -142,6 +142,22 @@ def breakfast():
     user= session.get('user', None)
     return render_template('breakfast.html')
 
+@app.route('/search', methods= ['POST'])
+def Search():
+  search= request.form.get('search')
+  cuisinetype= request.form.get('cuisineType')
+  mealType = request.form.get('mealType')
+  recipes= get_recipes(search, cuisineType= cuisinetype, mealType= mealType)
+  ret= []
+  for i in range(len(recipes.get('hits'))):
+    name= recipes.get('hits')[i].get('recipe').get('label')
+    ingredients= recipes.get('hits')[i].get('recipe').get('ingredients')
+    image= recipes.get('hits')[i].get('recipe').get('image')
+    ret.append([name, ingredients, image])
+  login = session.get('login', False)
+  user= session.get('user', None)
+  return render_template('/search.html', results= ret, login = login, user = user)
+
 @app.route('/breakfast', methods= ['POST'])
 def breakfast_search():
   search= request.form.get('search')
@@ -212,14 +228,18 @@ def logout():
    session.clear()
    return redirect(url_for('home'))
 
-@app.route('/', methods=['POST'])
+@app.route('/search', methods=['POST'])
 def Save_favorite():
+   print("Button click")
    if request.method == 'POST':
       recipe_name = request.form['recipe_name']
       user_name = session.get('user')
       ingredients = request.form['ingredients']
       time_of_day = request.form['time_of_day'] 
       print(f"Username: {user_name}, recipe_name: {recipe_name}")
+
+      if not (recipe_name and user_name and ingredients and time_of_day):
+            return jsonify({'error': 'Missing required data'}), 400
 
       user = User.query.filter_by(user_name = user_name).first()
 
@@ -239,7 +259,7 @@ def Save_favorite():
 
          print(f"Recipe '{recipe_name}' saved as a favorite for {user_name}!")
          
-      return redirect(url_for('dashboard'))
+      return redirect(url_for('favorites'))
 
 
 @app.route('/favorites', methods=['POST'])
@@ -330,7 +350,7 @@ def login_submit():
             session['user'] = user.user_name
             login = session.get('login')
             user= session.get('user')   
-            return render_template('dashboard.html', login= login)
+            return render_template('favorites.html', login= login)
   print("User not found")#username not found
   session['login']= False
   session['user']= None
@@ -367,7 +387,7 @@ def saved():
 
   print("fav")
   print(f"{results}")
-  return render_template('dashboard.html', favorites= results)
+  return render_template('favorites.html', favorites= results)
 
 
 # @app.route('/add_favorite', methods=['POST'])

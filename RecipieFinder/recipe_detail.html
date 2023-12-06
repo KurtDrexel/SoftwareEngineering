@@ -10,42 +10,12 @@
 <body>
     <h2>{{ recipe.recipe_name }} </h2>
     <img src="{{ recipe.image }}" alt="{{ recipe.recipe_name }} Image" class="recipe-image">
-    
-    Here is the recipe
-        {% for ingredient in recipe.ingredients %}
-            <li>{{  ingredient["text"] }}</li>
-        {% endfor %}
-        {{recipe.calories}}
-        {{recipe.mealType[0]}}
-        {{recipe.dishType[0]}}
-        {{recipe.dietType}}
-        {% for diet in recipe.dietLabels %}
-            {{diet}}
-        {% endfor %}
-
-        {% for healthlabel in recipe.healthLabels %}
-            {{healthlabel}}
-        {% endfor %}
-        {{recipe.url}}
-        
     <ul class="ingredients-list">
-        Here is the recipe
         {% for ingredient in recipe.ingredients %}
-            <li>{{  ingredient["text"] }}</li>
+            <li>{{ ingredient }}</li>
         {% endfor %}
-        {{recipe.calories}}
-        {{recipe.mealType}}
-        {{recipe.dishType}}
-        {{recipe.dietType}}
-        {% for diet in recipe.dietLabels %}
-            {{diet}}
-        {% endfor %}
-
-        {% for healthlabel in recipe.healthLabels %}
-            {{healthlabel}}
-        {% endfor %}
-
-        {{recipe.url}}
     </ul>
 </body>
 </html>
+
+
