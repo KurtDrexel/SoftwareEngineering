@@ -1,25 +1,25 @@
-<!--=============== This is a search page ===============-->
+<!--=============== This is a breakfast page ===============-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/styles.css">
-    <title> Recipe </title>
+    <title> Search </title>
 </head>
 <body>
     <a href ="../index.html" > </a><img src="/static/logo/logo_transparent.png" alt="Your Logo">
-    <div class="topnav">
-        <a href = "/" href="../index.html">Home</a>
+    <div class="sidenav">
+        <a href = "favorites" href="../favorites.html">dashboard</a>
         <a href="search" href="../search.html">Search Recipe</a>
-        <a href="login" href="../login.html">Login</a>
+        <a href="login" href="../breakfast.html">Logout</a>
     </div>
 
     <div class="search-container">
         <form method="POST" onsubmit="return validateForm()">
             <select name="cuisineType" required>
                 <option value="">Select Cuisine Type</option>
-                <option value="None"> </option>
+                <option value="american">none</option>
                 <option value="american">American</option>
                 <option value="asian">Asian</option>
                 <option value="british">British</option>
@@ -45,13 +45,13 @@
             
             <select name="mealType" required>
                 <option value="">Select Meal Type</option>
-                <option value="None"> </option>
-                <option value="Breakfast">Breakfast</option>
-                <option value="Brunch">Brunch</option>
-                <option value="Lunch">Lunch</option>
-                <option value="Dinner">Dinner</option>
-                <option value="Snack">Snack</option>
-                <option value="Teatime">Teatime</option>
+                <option value="breakfast">None</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="brunch">Brunch</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="snack">Snack</option>
+                <option value="teatime">Teatime</option>
             </select>
             <input type="text" placeholder="Search..." name="search" required>
             <button type="submit">Search</button>
@@ -89,6 +89,9 @@
             <p class="no-results-message"> No recipes found. Try a different search.</p>
         {% endif %}
     </div>
+    
+    
+   
     
     
     <!--=============== MAIN JS ===============-->

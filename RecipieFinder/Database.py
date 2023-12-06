@@ -190,7 +190,7 @@ def breakfast_search():
   return render_template('/breakfast.html', results= ret, login = login, user = user)
 
 
-@app.route('/recipe_detail/<string:recipe_name>')
+@app.route('/recipe_detail/<string:recipe_id>')
 def recipe_detail(recipe_id):
   print(recipe_id)
     # Fetch recipe details based on recipe_name from the database or API
